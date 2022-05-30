@@ -10,6 +10,8 @@ function PetCard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const imageDefaultSrc = 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcliparts.co%2Fcliparts%2Fpco%2F5rb%2Fpco5rbqcE.jpg&f=1&nofb=1'
+
   const url = `https://api.petfinder.com/v2/animals?type=${input}&page=2`;
 
   function callApi() {
@@ -17,7 +19,7 @@ function PetCard() {
       method: "GET",
       headers: {
         Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjQ5YTlmZmFmMjdhMTUwMjM4YjAwODc0MDNkNjkwZjczNTZlZThjZTI2ODY0MmM4YmZjNzQ0YzFhM2E4ZjExMDdkMTljNGE5YjdiYTU5NjI1IiwiaWF0IjoxNjUzOTIzMjU0LCJuYmYiOjE2NTM5MjMyNTQsImV4cCI6MTY1MzkyNjg1NCwic3ViIjoiIiwic2NvcGVzIjpbXX0.l8FksiED4qv3bDvzacbSJQmvS1V7J7x4UAEAmUi1rifJJrDHerNjPkVMkdzOdZckgvW6zSJ61A1o3Xhjdi2g5kffMz64B5N9swX9bTVf7gcldmhLMHjgb8mi0vT63BGHglt3RRqlRX_QtaiWeuUeatfVw4pUPeWlFbiZ256GhOWOe9tSnJfTdgf08uRK9now7PiaA-FkZGR8-_bXZI1p8NgccbJUn1nxAZo-nVpVr2r77_RRCWWgTllkf0nAUCvNdQWF--7phXU9y5CFz8T_hREhEx0beeyZZA0i6UfImPY8Amj9fXF_hRMNzXWvS6yCMmKOt9hxky7DyyM-7T8X4Q",
+          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjQ5ZmE4MjExMTdmNDIxYzYxMDE2MmZiMjllZjBjNTZmY2QzZDEwNGI3YjA1N2M3YWE0ZDAzNmM1ZGU3ZTNiYTg2OTlkOWMyMzYzMjcyNDE1IiwiaWF0IjoxNjUzOTI2ODgyLCJuYmYiOjE2NTM5MjY4ODIsImV4cCI6MTY1MzkzMDQ4Miwic3ViIjoiIiwic2NvcGVzIjpbXX0.Oc20Z1SfL8vj8GkxSY-eiPP5kKeDjILqse8n59p3qJpcotL94Ls7S0xqtd2c-gYi4t3V7xjXTXm4mmL8ljQh8Xv8RLSywUBtf66BW2KfVMGexMlETrjFyDN3zLrOKrqvLwLfjxBHNk8VPBkZJYZfmFRoMUXx1bxlR9p5ISTt4azzShATJd51VWPlj-VfO9YCq7PpCiEZndMegZQ3eo_Re-CiPtwpO9-Za-lA926Okn2IA3JsedqhbWSsrRUmXd5Pe2O4538LG6O_hDpFJhfsmIfMOYZWrY2DqswN0cF9qZwseRvyCa-JDs_jPSEFYyzeAZl4EChXQqLklLBhuAytGA",
         Accept: "application/json",
       },
     })
@@ -40,6 +42,7 @@ function PetCard() {
     callApi();
   }
 
+  if(pets){
   return (
     <>
       <h1>Let's find your new best friend!</h1>
@@ -50,7 +53,7 @@ function PetCard() {
         placeholder="What type of animal are you interested in?"
         id='user-input-box'
       />
-      <Button onClick={getAnimal} id='get-animal-button'>Get Animals</Button>
+      <Button onClick={getAnimal} id='get-animal-button' className='button'>Get Animals</Button>
       <Container id="pet-container">
         {pets.map((animal) =>
           pets.length > 0 ? (
@@ -59,18 +62,19 @@ function PetCard() {
                 <Card.Img
                   variant="top"
                   style={{ width: "100px" }}
-                  src=
-                  // {
-                  //   animal.photos[0].small === undefined
-                  //     ? 
-                      "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcliparts.co%2Fcliparts%2Fpco%2F5rb%2Fpco5rbqcE.jpg&f=1&nofb=1"
-                  //     : animal.photos[0].small
-                  // }
+                  src= 
+                  {
+                    animal.photos[0] 
+                      ? 
+                      animal.photos[0].small
+                      
+                      : {imageDefaultSrc}
+                  }
                   alt="this pets photo"
                 />
                 <Card.Body key={animal.id}>
                   <Card.Title className="dark-text animal-name">{animal.name}</Card.Title>
-                  <Card.Text data-tip data-for="pet-description">
+                  <Card.Text data-tip data-for="pet-description" className='pet-description'>
                     {animal.description}
                   </Card.Text>
                   {/* <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
@@ -79,20 +83,33 @@ function PetCard() {
                   <Button
                     variant="primary"
                     onClick={handleShow}
-                    className="more-info-button"
+                    className="more-info-button button"
                   >
                     View More Info
                   </Button>
                 </Card.Body>
               </Card>
             </div>
-          ) : (
-            <h1>No Animals</h1>
-          )
+          ) : <h1>No Animals</h1>
+          
         )}
       </Container>
     </>
-  );
+  )}
+  return (
+    <>
+    <h1>No Animals by this breed - Try Again</h1>
+    <input
+    type="text"
+    value={input}
+    onChange={getInput}
+    placeholder="What type of animal are you interested in?"
+    id='user-input-box'
+  />
+  <Button onClick={getAnimal} id='get-animal-button' className='button'>Get Animals</Button>
+  </>
+    )
+  
 }
 
 export default PetCard;
