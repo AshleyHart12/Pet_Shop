@@ -16,3 +16,8 @@ body {
   width: 250px;
   text-align: center;
 }
+
+.toolTip {
+  /* width: 200px; */
+  height: fit-content;
+}

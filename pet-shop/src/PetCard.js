@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {Card, Button, Container, ModalHeader, Modal} from "react-bootstrap";
+import ReactTooltip from 'react-tooltip';
 
 function PetCard() {
   const [pets, setPets] = useState([]);
@@ -75,14 +76,17 @@ function PetCard() {
             <Card style={{ width: "18rem" }} id='pet-card' key={animal.id}>
             <Card.Img variant="top" 
             style={{width: '100px'}}
-            src={animal.photos[0].small ? animal.photos[0].small : 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcliparts.co%2Fcliparts%2Fpco%2F5rb%2Fpco5rbqcE.jpg&f=1&nofb=1'}
+            src={animal.photos[0].small === undefined ? 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcliparts.co%2Fcliparts%2Fpco%2F5rb%2Fpco5rbqcE.jpg&f=1&nofb=1' : animal.photos[0].small }
             alt='this pets photo' 
             />
             <Card.Body key={animal.id}>
               <Card.Title>{animal.name}</Card.Title>
-              <Card.Text>
+              <Card.Text data-tip data-for='pet-description'>
                 {animal.description}
               </Card.Text>
+              {/* <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
+              {animal.description}
+              </ReactTooltip> */}
               <Button variant="primary" onClick={handleShow}>View More Info</Button>
             </Card.Body>
           </Card>
