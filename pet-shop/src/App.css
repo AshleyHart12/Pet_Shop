@@ -1,14 +1,12 @@
-@import url("https://fonts.googleapis.com");
-@import url("https://fonts.gstatic.com");
 @import url("https://fonts.googleapis.com/css2?family=Concert+One&display=swap");
 
 body {
   text-align: center;
   background-color: #FDF5DF;
+  font-family: 'Concert One', cursive;
 }
 
 h1 {
-  font-family: 'Concert One', cursive;
   color: #5EBEC4;
 }
 
@@ -17,14 +15,14 @@ h1 {
   font-weight: 900;
 }
 
-.animal-name {
-  font-family: 'Concert One', cursive;
+.button {
+  background-color: #F92C85;
+  color: white;
+  cursor: pointer;
 }
 
 .more-info-button {
-  background-color: #F92C85;
-  color: white;
-  padding:5px;
+  padding: 5px;
 }
 
 #pet-container {
@@ -59,8 +57,6 @@ h1 {
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #F92C85;
-  color: white;
   font-weight: 800;
 }
 
