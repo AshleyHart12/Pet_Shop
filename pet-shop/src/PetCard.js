@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button, Container, ModalHeader, Modal } from "react-bootstrap";
+import React, { useState, useEffect, createContext, useContext } from "react";
+import { Card, Button, Container } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
-// import ReactPaginate from "react-paginate";
-// import Pagination from 'react-bootstrap/Pagination';
 
 
 function PetCard() {
   const [pets, setPets] = useState([]);
   const [input, setInput] = useState("");
-  const [show, setShow] = useState(false);
   const [pageNum, setPageNum] = useState(1);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-
-  const imageDefaultSrc =
-    "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcliparts.co%2Fcliparts%2Fpco%2F5rb%2Fpco5rbqcE.jpg&f=1&nofb=1";
-
+  const petState = createContext();
+ 
   const url = `https://api.petfinder.com/v2/animals?type=${input}&page=${pageNum}&limit=10`;
 
   function callApi() {
@@ -25,13 +16,14 @@ function PetCard() {
       method: "GET",
       headers: {
         Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjEzZjdiM2I5OTUwMWJmMThlMmQzZGRhYzI3ZmRhNGUyMTkxMmQ2Y2VmNGFkZGJlNjQwYThlODM1NWJkNmE3NjI2NGRmNjVjNWNhMTdjZTc1IiwiaWF0IjoxNjU0MTMyOTE0LCJuYmYiOjE2NTQxMzI5MTQsImV4cCI6MTY1NDEzNjUxNCwic3ViIjoiIiwic2NvcGVzIjpbXX0.rzM_osZeyQeYO09XeuO9PVKwMLMePeB77l72ryYtHI5WNX4VlYCrO0JrG68Tj7254iYuq_tvrTHuTQ6rVc-XbNGphLkOXoRHT_0OR94riNkgbrDk1q7RkED6flHoes30-ElhNXAdQROyknXbpGh-SbdtOYt325kO4BePxJawNc6Mgi5dGSp9BzeMomK2hr5btYu0qD-05QYagW2uvWaevHc8WkaNNGGeFj8SKhJI-wQma-QC6AYWR8sGdeM-KXan9Mu9V_b7TdiajGJ-yc609LDDDPcx63suGePwZazr52mpCTVw1GsVfV06w7Ofl0eiviSwveZDo3YmAmyS2EjMpw",
+          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjI5YzkwNWQ1NzNlZTgzNDBhZDE0ZDVhODkwN2VkZDU3N2E2OGMwODNiNTRkNWNiYTA4Njc5MDg2ZTZkNWVhYzNiODdkZjM3M2ZlNmU5OTExIiwiaWF0IjoxNjU0ODk1NDgwLCJuYmYiOjE2NTQ4OTU0ODAsImV4cCI6MTY1NDg5OTA4MCwic3ViIjoiIiwic2NvcGVzIjpbXX0.v_IFpa9rQKUhK495Fv12F3ervak9ixbXgavRTzEBARSMook-uVAZWHnOZcJMNI0D5HQxBc6t48EL9RJvaV481UDG6Z01YVfSjU4NlUjM11BWAEpAsyuW8M9kqLhpLAntvP_mCaOTErXmtSHOdlFrHEH_nHMGf5O071sNGDjOqGp0FL1JemjN7_tgj8OsAJnwKCoGAh1YZWS4S97m-g4KHrNlWOSWUGsrbLz9f2hoM62Tzivl8G8Bdy0SVqTNIr3x6cDeDER_Y3JN6Icz58EqxesZLzADkCQ5uRbZ2kzfefDbmtsnMEm9p07LQt-FvdjfXBGYMHxDwxn1tQEjUrf90Q",
         Accept: "application/json",
       },
     })
       .then((res) => res.json())
       .then((data) => {
         setPets(data.animals);
+        console.log(data.animals)
       })
       .catch((err) => console.log(err));
   }
@@ -46,28 +38,41 @@ function PetCard() {
 
   function getAnimal() {
     callApi();
-    setInput('');
+    // setInput('');
   }
 
   const viewMore = () => {
     setPageNum(pageNum + 1);
     window.scrollTo({
       top: 0,
-      behavior: 'smooth' // for smoothly scrolling
+      behavior: 'smooth' 
     });
+  }
+
+  const viewPrevious = () => {
+    setPageNum(pageNum - 1);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' 
+    });
+  }
+
+  const viewPetProfile = () => {
+    // Take user to the pet profile on PetFinder using the url endpoint
   }
 
   if (pets) {
     return (
       <>
+      <a href='/favorites' style={{textDecoration: 'none', color: 'black'}}>
+        <div>
+        <span className="material-symbols-outlined" style={{color: '#F92C85'}}>
+              favorite
+        </span>
+        <p style={{width: '200px'}}>My Favorites</p>
+        </div>
+      </a>
         <h1>Let's find your new best friend!</h1>
-        {/* <div>{displayPets}</div>
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          pageCount={totalPages}
-          onPageChange={changePage}
-        />; */}
         <input
           type="text"
           value={input}
@@ -84,13 +89,16 @@ function PetCard() {
               <>
               <div>
                 <Card style={{ width: "18rem" }} id="pet-card" key={animal.id}>
+                <span className="material-symbols-outlined" style={{color: '#F92C85'}}>
+                  favorite
+                  </span>
                   <Card.Img
                     variant="top"
                     style={{ width: "100px" }}
                     src={
                       animal.photos[0]
-                        ? animal.photos[0].small
-                        : { imageDefaultSrc }
+                        ? animal.photos[0].medium
+                        : "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcliparts.co%2Fcliparts%2Fpco%2F5rb%2Fpco5rbqcE.jpg&f=1&nofb=1"
                     }
                     alt="this pets photo"
                   />
@@ -99,37 +107,27 @@ function PetCard() {
                       {animal.name}
                     </Card.Title>
                     <Card.Text
-                      data-tip
+                      data-tip='pet-description'
                       data-for="pet-description"
                       className="pet-description"
                     >
                       {animal.description}
                     </Card.Text>
-                    {/* <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
-              {animal.description}
-              </ReactTooltip> */}
+              <ReactTooltip />
+              <a href={animal.url} 
+              target="_blank"
+              rel="noopener noreferrer">
                     <Button
                       variant="primary"
-                      onClick={handleShow}
+                      // onClick={viewPetProfile}
+                      target='_blank'
                       className="more-info-button button"
                     >
                       View More Info
                     </Button>
+                 </a>
                   </Card.Body>
                 </Card>
-                {/* <Modal show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    Woohoo, you're reading this text in a modal!
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal> */}
               </div>
               
               </>
@@ -138,7 +136,11 @@ function PetCard() {
             )
           )}
         </Container>
-        <Button onClick={viewMore} className='button'>Next 10</Button>
+        <Button onClick={viewPrevious} className='button nextBtn'>Previous 10</Button>
+        <Button onClick={viewMore} className='button nextBtn'>Next 10</Button>
+        <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
+            'test'
+      </ReactTooltip>
       </>
     );
   }
@@ -156,7 +158,9 @@ function PetCard() {
         Get Animals
       </Button>
     </>
+    
   );
+  
 }
 
 export default PetCard;
