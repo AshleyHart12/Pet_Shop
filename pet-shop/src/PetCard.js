@@ -3,11 +3,13 @@ import { Card, Button, Container } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 
 
+export const PetState = createContext();
+
 function PetCard() {
   const [pets, setPets] = useState([]);
   const [input, setInput] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const petState = createContext();
+  const [bug, setBug] = useState('bug');
  
   const url = `https://api.petfinder.com/v2/animals?type=${input}&page=${pageNum}&limit=10`;
 
@@ -16,7 +18,7 @@ function PetCard() {
       method: "GET",
       headers: {
         Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjI5YzkwNWQ1NzNlZTgzNDBhZDE0ZDVhODkwN2VkZDU3N2E2OGMwODNiNTRkNWNiYTA4Njc5MDg2ZTZkNWVhYzNiODdkZjM3M2ZlNmU5OTExIiwiaWF0IjoxNjU0ODk1NDgwLCJuYmYiOjE2NTQ4OTU0ODAsImV4cCI6MTY1NDg5OTA4MCwic3ViIjoiIiwic2NvcGVzIjpbXX0.v_IFpa9rQKUhK495Fv12F3ervak9ixbXgavRTzEBARSMook-uVAZWHnOZcJMNI0D5HQxBc6t48EL9RJvaV481UDG6Z01YVfSjU4NlUjM11BWAEpAsyuW8M9kqLhpLAntvP_mCaOTErXmtSHOdlFrHEH_nHMGf5O071sNGDjOqGp0FL1JemjN7_tgj8OsAJnwKCoGAh1YZWS4S97m-g4KHrNlWOSWUGsrbLz9f2hoM62Tzivl8G8Bdy0SVqTNIr3x6cDeDER_Y3JN6Icz58EqxesZLzADkCQ5uRbZ2kzfefDbmtsnMEm9p07LQt-FvdjfXBGYMHxDwxn1tQEjUrf90Q",
+          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjJmZTVlZDAwZGI4ZTJkZmRmZjM5NzEwZWYyZmM1YTY1Y2UyNWU2ZDM2YmZhODFmZWZmZjcxNzZlYzI2MDUxYzdhYzdiZTY4ZTc3YTdjYjVjIiwiaWF0IjoxNjU1NDExOTg5LCJuYmYiOjE2NTU0MTE5ODksImV4cCI6MTY1NTQxNTU4OSwic3ViIjoiIiwic2NvcGVzIjpbXX0.JVKyK0_AwBIkmwQOWB1IS10t2oumY8GbhnczxkwOxUotnCCj7Ag_hpoXyIZgffos9AmqAvI0dfzd2RCRQZzX-vlxmGyE2V2eFmWJdOYBYwwS5aANUa5FYxppggEqEBFabfFUr92BmYWlPcuGut5QIzpX6aeyeAsRv8i5ZcMkOnGJZym_6sOwWSng7REnZFFx97bApKAET3XXUDim5CJ2nLfNgt7fsGYVKu7-F4fOEmGlmWKJ7aVdMl_-8re5uO83tyLGzxa-3hwCPYFnfnKxVq4gff8gwozqfvAL0CyS_bG8e9rXAWpCtwCDH5osHFvurjanllkxrygFcsvi6jMxPA",
         Accept: "application/json",
       },
     })
@@ -57,13 +59,18 @@ function PetCard() {
     });
   }
 
+  const test = () => {
+    setBug('TEST SUCCESSFUL!');
+    console.log({bug})
+  }
+
   const viewPetProfile = () => {
     // Take user to the pet profile on PetFinder using the url endpoint
   }
 
   if (pets) {
     return (
-      <>
+      <PetState.Provider bug='bug'>
       <a href='/favorites' style={{textDecoration: 'none', color: 'black'}}>
         <div>
         <span className="material-symbols-outlined" style={{color: '#F92C85'}}>
@@ -83,6 +90,7 @@ function PetCard() {
         <Button onClick={getAnimal} id="get-animal-button" className="button">
           Get Animals
         </Button>
+        <Button onClick={test}>Test</Button>
         <Container id="pet-container">
           {pets.map((animal) =>
             pets.length > 0 ? (
@@ -116,15 +124,17 @@ function PetCard() {
               <ReactTooltip />
               <a href={animal.url} 
               target="_blank"
-              rel="noopener noreferrer">
-                    <Button
+              rel="noopener noreferrer"
+              className="more-info-button button"
+              >
+                    {/* <Button
                       variant="primary"
                       // onClick={viewPetProfile}
                       target='_blank'
                       className="more-info-button button"
-                    >
+                    > */}
                       View More Info
-                    </Button>
+                    {/* </Button> */}
                  </a>
                   </Card.Body>
                 </Card>
@@ -138,10 +148,10 @@ function PetCard() {
         </Container>
         <Button onClick={viewPrevious} className='button nextBtn'>Previous 10</Button>
         <Button onClick={viewMore} className='button nextBtn'>Next 10</Button>
-        <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
+        {/* <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
             'test'
-      </ReactTooltip>
-      </>
+      </ReactTooltip> */}
+      </PetState.Provider>
     );
   }
   return (
@@ -157,6 +167,7 @@ function PetCard() {
       <Button onClick={getAnimal} id="get-animal-button" className="button">
         Get Animals
       </Button>
+      
     </>
     
   );
