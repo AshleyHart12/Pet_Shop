@@ -9,7 +9,6 @@ function PetCard() {
   const [pets, setPets] = useState([]);
   const [input, setInput] = useState("");
   const [pageNum, setPageNum] = useState(1);
-  const [bug, setBug] = useState('bug');
  
   const url = `https://api.petfinder.com/v2/animals?type=${input}&page=${pageNum}&limit=10`;
 
@@ -59,18 +58,9 @@ function PetCard() {
     });
   }
 
-  const test = () => {
-    setBug('TEST SUCCESSFUL!');
-    console.log({bug})
-  }
-
-  const viewPetProfile = () => {
-    // Take user to the pet profile on PetFinder using the url endpoint
-  }
-
   if (pets) {
     return (
-      <PetState.Provider bug='bug'>
+      <>
       <a href='/favorites' style={{textDecoration: 'none', color: 'black'}}>
         <div>
         <span className="material-symbols-outlined" style={{color: '#F92C85'}}>
@@ -90,7 +80,6 @@ function PetCard() {
         <Button onClick={getAnimal} id="get-animal-button" className="button">
           Get Animals
         </Button>
-        <Button onClick={test}>Test</Button>
         <Container id="pet-container">
           {pets.map((animal) =>
             pets.length > 0 ? (
@@ -127,14 +116,7 @@ function PetCard() {
               rel="noopener noreferrer"
               className="more-info-button button"
               >
-                    {/* <Button
-                      variant="primary"
-                      // onClick={viewPetProfile}
-                      target='_blank'
-                      className="more-info-button button"
-                    > */}
                       View More Info
-                    {/* </Button> */}
                  </a>
                   </Card.Body>
                 </Card>
@@ -151,7 +133,7 @@ function PetCard() {
         {/* <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
             'test'
       </ReactTooltip> */}
-      </PetState.Provider>
+      </>
     );
   }
   return (
