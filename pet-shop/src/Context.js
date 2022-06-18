@@ -1,15 +1,5 @@
-import React from 'react'; 
-// const GlobalState = React.createContext(); 
+import { createContext } from "react";
+ 
+export const UserContext = createContext(null);
 
 
-// export default  GlobalState;
-
- const GlobalState = ({children}) => {
-    return (
-        <GlobalState.Provider value= 'test'>
-            {children}
-        </GlobalState.Provider>
-    )
-}
-
-export default GlobalState;

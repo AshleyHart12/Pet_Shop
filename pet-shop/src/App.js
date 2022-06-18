@@ -1,19 +1,18 @@
 import './App.css';
 import PetCard from './PetCard.js';
 import Favorites from './Favorites';
-import ReactTooltip from "react-tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {UserContext} from './Context';
 
 function App() {
   return (
     <BrowserRouter>
+    <UserContext.Provider value='Hello Context'>
        <Routes>
         <Route path='/' element={<PetCard />} />
         <Route path='/favorites' element={<Favorites />} />
-        {/* <ReactTooltip id="pet-description" place="top" effect="solid" className='toolTip' >
-              Animal Description
-        </ReactTooltip> */}
         </Routes>
+        </UserContext.Provider>
     </BrowserRouter>
   );
 }

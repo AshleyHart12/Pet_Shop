@@ -1,9 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { Card, Button, Container } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
-
-
-export const PetState = createContext();
+// import UserContext from "./Context";
 
 function PetCard() {
   const [pets, setPets] = useState([]);
@@ -17,7 +15,7 @@ function PetCard() {
       method: "GET",
       headers: {
         Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6IjJmZTVlZDAwZGI4ZTJkZmRmZjM5NzEwZWYyZmM1YTY1Y2UyNWU2ZDM2YmZhODFmZWZmZjcxNzZlYzI2MDUxYzdhYzdiZTY4ZTc3YTdjYjVjIiwiaWF0IjoxNjU1NDExOTg5LCJuYmYiOjE2NTU0MTE5ODksImV4cCI6MTY1NTQxNTU4OSwic3ViIjoiIiwic2NvcGVzIjpbXX0.JVKyK0_AwBIkmwQOWB1IS10t2oumY8GbhnczxkwOxUotnCCj7Ag_hpoXyIZgffos9AmqAvI0dfzd2RCRQZzX-vlxmGyE2V2eFmWJdOYBYwwS5aANUa5FYxppggEqEBFabfFUr92BmYWlPcuGut5QIzpX6aeyeAsRv8i5ZcMkOnGJZym_6sOwWSng7REnZFFx97bApKAET3XXUDim5CJ2nLfNgt7fsGYVKu7-F4fOEmGlmWKJ7aVdMl_-8re5uO83tyLGzxa-3hwCPYFnfnKxVq4gff8gwozqfvAL0CyS_bG8e9rXAWpCtwCDH5osHFvurjanllkxrygFcsvi6jMxPA",
+          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJsS3ZzbWFZcktLVzQ2ald1N3FsYTIyN3l3T2VNN1N2QXRveUhYdWduUnczclNuVUF4NSIsImp0aSI6ImI4ODlhNmVlYWJlNDA4OGI0MDdhY2ViMjE3MGJiNTY1Y2I5OTY1ODZlZWU2YWI2YTkzMGY3MGI4ZTIyZTM1MmRkNGZlMjU0NTg5OWQ4MDVmIiwiaWF0IjoxNjU1NTY4ODQwLCJuYmYiOjE2NTU1Njg4NDAsImV4cCI6MTY1NTU3MjQ0MCwic3ViIjoiIiwic2NvcGVzIjpbXX0.qSxWpOny_UKY2rlJTaxyApghEFxBuqPAG6Lj0eCLc5OOFic-1gIJ4Jv00XfKijwnFCSVZ_EWp9kgnFE6hqj_V0eQduv1BAUOJEfwUUQlaxI3OwmEMhzkXBD3t3_5AzQx9zJdOwuNv2tMoNU7agbqeWWQdS9HNyu2XreY8ZgVmorenicReIQ2sACQOhahbyaJ447r_Iy47xHXvFV88Ms56S_qgorZ4BZkF8Knhl-ys5w9hIFaNRHRcSWqSz-LNaav54UTDNff4Wjec6jW5bvbLqYoM-ZcEwJWfm2y5Q0PzDG7lAgbBIGLgrrmH1JgsDczFguRg-FhXqIcFFKZevoOfQ",
         Accept: "application/json",
       },
     })

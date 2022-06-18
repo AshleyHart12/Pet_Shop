@@ -1,18 +1,13 @@
 import React, {useContext, Button} from 'react';
-import {PetState} from './PetCard';
+import {UserContext} from './Context';
 
 function Favorites() {
-  const user= useContext(PetState);
-
-  const test = () => {
-    console.log({user})
-  }
+  const user= useContext(UserContext);
   
   return (
-    <PetState>
+    <>
     <div>{user}</div>
-    <Button onClick={test}>Test</Button>
-    </PetState>
+    </>
   )
 }
 
