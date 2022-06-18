@@ -6,7 +6,13 @@ function Favorites() {
   
   return (
     <>
-    <div>{user}</div>
+   { user.pets.map((pet) => {
+      return (
+          <h1>{pet.id}</h1>
+          )
+    })}
+
+ 
     </>
   )
 }
