@@ -4,4 +4,8 @@ export const UserContext = createContext({
     pets: []
 });
 
+export const FavoritesContext = createContext({
+    favorites: []
+});
+
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { Card, Button, Container } from "react-bootstrap";
+import { Prev } from "react-bootstrap/esm/PageItem";
 import ReactTooltip from "react-tooltip";
-import {UserContext} from './Context';
+import {UserContext, FavoritesContext} from './Context';
 
 
 function PetCard() {
@@ -9,7 +10,15 @@ function PetCard() {
   // const [pets, setPets] = useState([]);
   const [input, setInput] = useState("");
   const [pageNum, setPageNum] = useState(1);
- 
+  const favorites = useContext(FavoritesContext);
+  const [addFav, setAddFav] = useState({
+    name: 'name',
+    image: '',
+    age: Number
+  });
+  // const [petid, setPetid] = useState('');
+
+
   // const url = `https://api.petfinder.com/v2/animals?type=${input}&page=${pageNum}&limit=10`;
 
   // function callApi() {
@@ -58,8 +67,11 @@ function PetCard() {
     });
   }
 
-  const addToFavorites = () => {
-    console.log()
+  const addToFavorites = value => event => {
+    // addFavoritePetEvent({newUser: event})
+    // setPetid(event.currentTarget.id);
+    // setAddFav({...addFav, name: value.name, image: value.src, age: value.age});
+    console.log(value)
   }
 
   if (user.pets) {
@@ -89,8 +101,8 @@ function PetCard() {
             user.pets.length > 0 ? (
               <>
               <div>
-                <Card style={{ width: "18rem" }} id="pet-card" key={animal.id}>
-                <span className="material-symbols-outlined" style={{color: '#F92C85', cursor: 'pointer'}} onClick={addToFavorites}>
+                <Card style={{ width: "18rem" }} id="pet-card" >
+                <span className="material-symbols-outlined" style={{color: '#F92C85', cursor: 'pointer'}} onClick={addToFavorites(animal.name)} key={animal.id}>
                   favorite
                   </span>
                   <Card.Img
@@ -103,7 +115,7 @@ function PetCard() {
                     }
                     alt="this pets photo"
                   />
-                  <Card.Body key={animal.id}>
+                  <Card.Body>
                     <Card.Title className="dark-text animal-name">
                       {animal.name}
                     </Card.Title>

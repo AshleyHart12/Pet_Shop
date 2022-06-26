@@ -6,9 +6,9 @@ function Favorites() {
   
   return (
     <>
-   { user.pets.map((pet) => {
+   { user.favorites.map((pet) => {
       return (
-          <h1>{pet.id}</h1>
+          <div>{pet.name}</div>
           )
     })}
 
